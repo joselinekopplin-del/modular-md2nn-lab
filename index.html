@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="模块化衍射神经网络（MD²NN）可重构超表面加密的浏览器仿真。">
+  <title>层叠成钥 · MD²NN 可重构超表面加密仿真</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topline">
+    <div class="shell nav">
+      <a class="brand" href="#top"><img src="assets/mark.svg" alt=""><span><b>层叠成钥</b><small>MODULAR · MD²NN</small></span></a>
+      <nav aria-label="页内导航"><a href="#lab">仿真实验</a><a href="#model">模型说明</a><a href="#paper">论文依据</a></nav>
+    </div>
+  </header>
+  <main id="top">
+    <section class="hero shell">
+      <div class="hero-copy">
+        <p class="eyebrow">RECOMPOSABLE LAYERED METASURFACES</p>
+        <h1>层可独立成像，<br><em>叠合</em>才开启密文。</h1>
+        <p class="lead">以两片超表面为模块：<i>MS₁</i> 单独给出身份图，<i>MS₂</i> 单独给出索引图；仅在正确波长、正确层组合与正确间距下，级联光场才读出密码。</p>
+        <div class="hero-stat"><span><b id="channelCount">9</b> 个当前可选通道</span><span>可扩展为 <math><mi>m</mi><mo>(</mo><msup><mn>2</mn><mi>N</mi></msup><mo>−</mo><mn>1</mn><mo>)</mo></math></span></div>
+      </div>
+      <div class="paper-figure" aria-label="两层超表面与三重密钥的示意图">
+        <div class="beam"><span></span><span></span><span></span></div>
+        <div class="plate p1"><b>MS₁</b><i>身份层</i></div><div class="gap-label">d</div><div class="plate p2"><b>MS₂</b><i>索引层</i></div>
+        <div class="out"><span>λ</span><span>组合</span><span>间距</span></div>
+      </div>
+    </section>
+
+    <section class="shell lab" id="lab" aria-labelledby="lab-title">
+      <div class="section-head"><p class="eyebrow">INTERACTIVE OPTICAL LABORATORY</p><h2 id="lab-title">以三把物理钥匙读取一段光场</h2><p>拖动参数后，画面由浏览器内的复振幅编码、自由空间传播近似与相干叠加实时生成。它是根据论文机制建立的教学型数值模型，不是论文训练相位版图的原样复现。</p></div>
+      <div class="lab-layout">
+        <aside class="control-card" aria-label="实验参数">
+          <div class="card-title"><span>01</span><h3>设置读取条件</h3></div>
+          <fieldset><legend>入射波长 λ</legend><div class="seg" role="group"><button data-wave="450">450 <small>nm</small></button><button data-wave="550" class="chosen">550 <small>nm</small></button><button data-wave="650">650 <small>nm</small></button></div></fieldset>
+          <fieldset><legend>参与的超表面层</legend><label class="check"><input id="ms1" type="checkbox" checked><span>MS₁ <i>身份层</i></span></label><label class="check"><input id="ms2" type="checkbox" checked><span>MS₂ <i>索引层</i></span></label></fieldset>
+          <fieldset><legend>层间距离 <i>d</i> <output id="spacingOut">500 μm</output></legend><input id="spacing" type="range" min="420" max="580" step="1" value="500"><div class="range-label"><span>420 μm</span><span>580 μm</span></div></fieldset>
+          <div class="key-note"><span>当前钥匙</span><b id="keyReadout">550 nm · MS₁ + MS₂ · 500 μm</b></div>
+          <button id="wrongKey" class="outline">载入错钥对照</button>
+          <button id="restoreKey" class="text-btn">恢复正确密钥</button>
+        </aside>
+        <div class="results">
+          <div class="result-header"><div><p class="eyebrow">RECONSTRUCTED FIELD</p><h3 id="resultTitle">密码全息 · 青绿密函</h3></div><div class="signal"><span id="signalDot"></span><b id="signalLabel">密钥吻合</b></div></div>
+          <div class="canvases"><figure><figcaption>目标振幅</figcaption><canvas id="target" width="320" height="320" aria-label="目标振幅图"></canvas></figure><figure><figcaption>接收振幅 <span id="distanceTag">d = 500 μm</span></figcaption><canvas id="received" width="320" height="320" aria-label="接收振幅图"></canvas></figure></div>
+          <div class="metrics"><div><span>振幅误差 MSE</span><b id="mse">0.0000</b></div><div><span>图样相关 C</span><b id="corr">0.000</b></div><div><span>相对转换效率</span><b id="pce">0.0%</b></div></div>
+          <div class="scan"><div><div><p class="eyebrow">AXIAL TOLERANCE</p><h3>间距容差扫描</h3></div><button id="scanBtn">扫描 420–580 μm</button></div><canvas id="chart" width="700" height="166" aria-label="层间距离与重建质量曲线"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell model" id="model">
+      <div class="model-copy"><p class="eyebrow">MODEL ARCHITECTURE</p><h2>模块先独立工作，<br>再共同承担加密任务。</h2><p>论文采用联合优化：每个层既要完成自己的单层全息，又要在与其他层叠加时完成新的输出。波长决定传播传递函数，层组合决定经过哪些相位面，层间距决定两层之间积累的衍射相位。</p><button id="trainBtn" class="ink">演示联合优化 <span>↗</span></button></div>
+      <div class="formula-card"><p>前向传播</p><math display="block"><msub><mi>U</mi><mrow><mi>l</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>;</mo><mi>λ</mi><mo>)</mo><mo>=</mo><msup><mi>ℱ</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>{</mo><mi>ℱ</mi><mo>[</mo><msub><mi>T</mi><mi>l</mi></msub><mo>(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>)</mo><mo>·</mo><msub><mi>U</mi><mi>l</mi></msub><mo>]</mo><mo>·</mo><mi>H</mi><mo>(</mo><msub><mi>f</mi><mi>x</mi></msub><mo>,</mo><msub><mi>f</mi><mi>y</mi></msub><mo>;</mo><msub><mi>d</mi><mi>l</mi></msub><mo>,</mo><mi>λ</mi><mo>)</mo><mo>}</mo></math><p>联合损失</p><math display="block"><mi>ℒ</mi><mo>=</mo><munder><mo>∑</mo><mi>k</mi></munder><munder><mo>∑</mo><mrow><mi>λ</mi><mo>∈</mo><msub><mi>Λ</mi><mi>k</mi></msub></mrow></munder><mi mathvariant="normal">MSE</mi><mo>(</mo><mo>|</mo><msubsup><mi>U</mi><mrow><mi>k</mi><mi>λ</mi></mrow><mtext>out</mtext></msubsup><mo>|</mo><mo>,</mo><mo>|</mo><msubsup><mi>U</mi><mrow><mi>k</mi><mi>λ</mi></mrow><mtext>target</mtext></msubsup><mo>|</mo><mo>)</mo></math><div class="loss-demo"><div class="loss-top"><span>优化示意</span><b id="iteration">0 / 1000</b></div><canvas id="loss" width="510" height="128" aria-label="联合优化损失下降曲线"></canvas><p id="trainingText">点击“演示联合优化”，查看多任务损失如何逐步下降。</p></div></div>
+    </section>
+
+    <section class="shell keyspace"><p class="eyebrow">CONFIGURATION SPACE</p><h2>同一组层，因组合而产生不同身份。</h2><div id="channelGrid" class="channel-grid"></div></section>
+    <section class="shell paper" id="paper"><div><p class="eyebrow">SOURCE & LIMITS</p><h2>网页依据与边界</h2></div><div><p>依据 Park 等人在 <i>Advanced Functional Materials</i> 发表的 MD²NN 结构：两层可分别重建 ID 与 QR，组合后在特定间距重建密码；原文使用 450、550、650 nm 三个可见光波长，并以角谱法和振幅 MSE 联合优化。</p><p>本网页不使用论文未公开的相位权重、材料色散数据或全波计算结果。输出用于理解“波长 × 层组合 × 间距”的物理密钥逻辑；可见图像不等同于已制造器件的安全强度。</p><a href="https://doi.org/10.1002/adfm.202523309" target="_blank" rel="noopener">阅读原论文与开放 PDF ↗</a></div></section>
+  </main>
+  <footer class="shell"><span>层叠成钥 · MD²NN 可重构超表面加密仿真</span><span>所有计算在本地浏览器完成</span></footer>
+  <script src="assets/app.js"></script>
+</body></html>
