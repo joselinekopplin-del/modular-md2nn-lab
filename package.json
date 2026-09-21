@@ -1,0 +1,10 @@
+{
+  "name": "modular-md2nn-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "基于模块化衍射神经网络的可重构超表面加密仿真",
+  "scripts": {
+    "start": "node server.cjs",
+    "test": "node tests/smoke.cjs"
+  }
+}
